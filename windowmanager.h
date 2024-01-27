@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QMap>
 
+#include "data_structure/datasructures.h"
+
 class WindowManager : public QObject
 {
     Q_OBJECT
@@ -16,8 +18,8 @@ private:
     static WindowManager* instance_;
     WindowManager();
 
-public:
-    void onLoginSuccess();
+public slots:
+    void slot_LoginSuccess(std::shared_ptr<User> master);
 
 
 signals:

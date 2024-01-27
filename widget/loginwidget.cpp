@@ -6,7 +6,7 @@
 #include <QPushButton>
 
 #include "../windowmanager.h"
-#include "../config/clientconfig.h"
+#include "../config/clientsetting.h"
 
 LoginWidget::LoginWidget(QWidget *parent)
     : QWidget(parent)
@@ -22,7 +22,7 @@ LoginWidget::LoginWidget(QWidget *parent)
         password_ = new QLineEdit(this);
         password_mode_ = new QCheckBox(this);
 
-        QObject::connect(password_mode_, &QCheckBox::clicked, this, &LoginWidget::onpwChkChanged);
+        QObject::connect(password_mode_, &QCheckBox::clicked, this, &LoginWidget::slot_PWChkChanged);
 
         password_->setEchoMode(QLineEdit::Password);
 
@@ -41,7 +41,7 @@ LoginWidget::LoginWidget(QWidget *parent)
         auto reqButton = new QPushButton("login", this);
         auto quitButton = new QPushButton("quit", this);
 
-        QObject::connect(reqButton, &QPushButton::clicked, this, &LoginWidget::onLoginBtnClicked);
+        QObject::connect(reqButton, &QPushButton::clicked, this, &LoginWidget::slot_LoginBtnClicked);
         QObject::connect(quitButton, &QPushButton::clicked, [this](){ this->close(); });
 
         buttonLayout->addWidget(reqButton);
@@ -51,21 +51,24 @@ LoginWidget::LoginWidget(QWidget *parent)
     }
 
     this->setLayout(mainLayout);
-    this->setFixedSize(ClientConfig::GetInstance()->GetLoginWindowSize());
+    this->setFixedSize(ClientSetting::GetInstance()->GetLoginWindowSize());
 }
 
 LoginWidget::~LoginWidget() {}
 
-void LoginWidget::onLoginBtnClicked()
+void LoginWidget::slot_LoginBtnClicked()
 {
     qDebug("user:{%s},psd:{%s}", qUtf8Printable(this->user_name_->text()), qUtf8Printable(this->password_->text()));
 
-    if (this->user_name_->text() == "asd" && this->password_->text() == "zxc") {
-        WindowManager::GetInstance()->onLoginSuccess();
+#ifdef QT_DEBUG
+    if (this->user_name_->text() == ClientSetting::DEBUG_GetDebugUser()->UserName() && this->password_->text() == ClientSetting::DEBUG_login_password()) {
+        WindowManager::GetInstance()->slot_LoginSuccess(ClientSetting::DEBUG_GetDebugUser());
+        return;
     }
+#endif
 }
 
-void LoginWidget::onpwChkChanged(bool checked)
+void LoginWidget::slot_PWChkChanged(bool checked)
 {
     this->password_->setEchoMode(!checked ? QLineEdit::EchoMode::Password : QLineEdit::EchoMode::Normal);
 }

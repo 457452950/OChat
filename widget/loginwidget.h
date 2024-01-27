@@ -14,8 +14,8 @@ public:
     ~LoginWidget();
 
 private:
-    void onLoginBtnClicked();
-    void onpwChkChanged(bool checked);
+    void slot_LoginBtnClicked();
+    void slot_PWChkChanged(bool checked);
 
 private:
     QLineEdit* user_name_;

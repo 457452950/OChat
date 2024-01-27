@@ -9,6 +9,9 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# set windows nt version
+add_definitions(-D_WIN32_WINNT=0x0A00)
+
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(asio CONFIG REQUIRED)
@@ -18,10 +21,15 @@ set(PROJECT_SOURCES
         main.cpp
 
         log/logger.h log/logger.cpp
-        config/clientconfig.h config/clientconfig.cpp
+        config/clientsetting.h config/clientsetting.cpp
+        cache/datacache.h cache/datacache.cpp
 
         widget/loginwidget.h widget/loginwidget.cpp
         widget/mainwidget.h widget/mainwidget.cpp
+        widget/chatwidget.h widget/chatwidget.cpp
+
+        data_structure/datasructures.h data_structure/datasructures.cpp
+
         windowmanager.h windowmanager.cpp
 )
 

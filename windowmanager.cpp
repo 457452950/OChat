@@ -32,13 +32,13 @@ WindowManager::WindowManager()
     this->login_wid_->show();
 }
 
-void WindowManager::onLoginSuccess()
+void WindowManager::slot_LoginSuccess(std::shared_ptr<User> master)
 {
     if (this->main_wid_ != nullptr) {
         delete this->main_wid_;
     }
 
-    this->main_wid_ = new MainWidget();
+    this->main_wid_ = new MainWidget(master);
     this->main_wid_->show();
 
     this->login_wid_->hide();
