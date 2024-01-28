@@ -30,6 +30,8 @@ set(PROJECT_SOURCES
 
         data_structure/datasructures.h data_structure/datasructures.cpp
 
+        backend/backend.h backend/backend.cpp
+
         windowmanager.h windowmanager.cpp
 )
 

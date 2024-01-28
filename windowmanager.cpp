@@ -4,6 +4,7 @@
 
 #include "widget/loginwidget.h"
 #include "widget/mainwidget.h"
+#include "widget/chatwidget.h"
 
 WindowManager* WindowManager::instance_ = nullptr;
 
@@ -42,4 +43,38 @@ void WindowManager::slot_LoginSuccess(std::shared_ptr<User> master)
     this->main_wid_->show();
 
     this->login_wid_->hide();
+}
+
+void WindowManager::slot_CreateChatSession(std::shared_ptr<ChatGroup> group)
+{
+    auto uid = group->Uid();
+    auto it = chat_wids_.find(uid);
+    if (it != chat_wids_.end()) {
+        it.value()->show();
+        qDebug() << group->Uid() << group->GroupName() << " window existed, show.";
+        return;
+    }
+    qDebug() << group->Uid() << group->GroupName() << " window not existed, create.";
+
+    auto chat_widget = new ChatWidget(group);
+    this->chat_wids_.insert(uid, chat_widget);
+    chat_widget->show();
+}
+
+void WindowManager::slot_DestroyChatSession(QString uid)
+{
+    auto it = chat_wids_.find(uid);
+
+    Q_ASSERT(it != chat_wids_.end());
+
+    delete it.value();
+    chat_wids_.erase(it);
+}
+
+void WindowManager::slot_DestroyAllChatSession()
+{
+    for (auto it : this->chat_wids_){
+        delete it;
+    }
+    chat_wids_.clear();
 }

@@ -6,11 +6,15 @@
 #include <QLabel>
 #include <QListWidget>
 #include <QTreeWidget>
+#include <QCloseEvent>
 
 #include <memory>
 
 #include "../data_structure/datasructures.h"
 
+/*
+ *  用户展示面板
+ */
 class UserBoard : public QWidget {
     Q_OBJECT
 public:
@@ -18,7 +22,7 @@ public:
 
     void SetUser(std::shared_ptr<User> user);
 
-    void Update();
+    void Refresh();
 
 signals:
 
@@ -31,16 +35,49 @@ private:
     // 展示信息
     QLabel* show_label_;
 
-    // data
+    /* data */
     std::shared_ptr<User> user_;
 };
 
+/*
+ *  对话群聊展示面板
+ */
+class ChatGroupBoard : public QWidget {
+    Q_OBJECT
+public:
+    explicit ChatGroupBoard(QWidget *parent = nullptr);
+
+    void SetGroup(std::shared_ptr<ChatGroup> group);
+    std::shared_ptr<ChatGroup> Group() const;
+
+    void Refresh();
+
+
+signals:
+
+private:
+    /* layout */
+    // 头像
+    QLabel* group_pix_;
+    //
+    QLabel* group_name_;
+    // 展示信息
+    QLabel* show_label_;
+
+    /* data */
+    std::shared_ptr<ChatGroup> group_;
+};
+
+
+/*
+ *  对话列表窗口
+ */
 class ChatSessionList : public QWidget {
     Q_OBJECT
 public:
     explicit ChatSessionList(QWidget *parent = nullptr);
 
-    void AddUser(std::shared_ptr<User> user);
+    void AddChatSession(std::shared_ptr<ChatGroup> group);
 
 signals:
 
@@ -50,22 +87,47 @@ private:
     void slot_ItemMenu();
 
 private:
+    // layout
     QListWidget* list_widget_;
 };
 
-class UserList : public QWidget {
+/*
+ *  好友列表窗口
+ */
+class FriendList : public QWidget {
     Q_OBJECT
 public:
-    explicit UserList(QWidget *parent = nullptr);
+    explicit FriendList(QWidget *parent = nullptr);
 
     void AddUser(QString party,  std::shared_ptr<User> user);
 
 signals:
 
 private:
+    // layout
     QTreeWidget* root_;
 };
 
+/*
+ *  群聊列表窗口
+ */
+class GroupList : public QWidget {
+    Q_OBJECT
+public:
+    explicit GroupList(QWidget *parent = nullptr);
+
+    void AddGroup(QString party, std::shared_ptr<ChatGroup> group);
+
+signals:
+
+private:
+    // layout
+    QTreeWidget* root_;
+};
+
+/*
+ *  主页面
+ */
 class MainWidget : public QWidget
 {
     Q_OBJECT
@@ -75,11 +137,15 @@ public:
 signals:
 
 private:
+    void closeEvent(QCloseEvent* event);
+
+
+private:
     // layout
     UserBoard* master_board_;
     ChatSessionList *user_list_;
-    UserList* friend_list_;
-    UserList* class_list_;
+    FriendList* friend_list_;
+    GroupList* class_list_;
 
     // data
     std::shared_ptr<User> master_user_;

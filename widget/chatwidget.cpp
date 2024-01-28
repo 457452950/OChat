@@ -1,5 +1,133 @@
 #include "chatwidget.h"
 
-ChatWidget::ChatWidget(QWidget *parent)
+#include <QBoxLayout>
+#include <QSplitter>
+
+#include "../backend/backend.h"
+
+
+/* 输入框 */
+InputWidget::InputWidget(QWidget *parent)
+    : QWidget(parent)
+{
+
+    QVBoxLayout* main_layout = new QVBoxLayout(this);
+    main_layout->setSpacing(0);
+    {
+        QHBoxLayout* buttons_line = new QHBoxLayout();
+        buttons_line->setSpacing(0);
+        {
+            image_ = new QPushButton("image", this);
+            buttons_line->addWidget(image_);
+
+            more_ = new QPushButton("...", this);
+            buttons_line->addWidget(more_);
+
+            QSpacerItem* space_item = new QSpacerItem(9999, 0, QSizePolicy::Maximum, QSizePolicy::Minimum);
+            buttons_line->addSpacerItem(space_item);
+        }
+        main_layout->addLayout(buttons_line);
+
+
+        input_ = new QTextEdit(this);
+        main_layout->addWidget(input_);
+    }
+    this->setLayout(main_layout);
+    this->resize(this->size().width(), 210);
+}
+
+void InputWidget::SetListeaner(Listeaner *new_listeaner)
+{
+    listeaner_ = new_listeaner;
+}
+
+
+/* 聊天对话窗 */
+ChatWidget::ChatWidget(QString group_uid, QWidget *parent)
     : QWidget{parent}
-{}
+{
+    this->group_ = Backend::GetInstance()->GetGroupFromUid(group_uid);
+
+    this->resize({800, 600});
+    this->initLayout();
+}
+
+ChatWidget::ChatWidget(std::shared_ptr<ChatGroup> group, QWidget *parent)
+    : QWidget(parent), group_(group)
+{
+    this->resize({800, 600});
+    this->initLayout();
+}
+
+void ChatWidget::Refresh()
+{
+    Q_ASSERT(this->group_);
+
+    this->setWindowTitle(this->group_->GroupName());
+
+}
+
+void ChatWidget::initLayout()
+{
+    QHBoxLayout* main_layout = new QHBoxLayout(this);
+    main_layout->setSpacing(0);
+    {
+        QVBoxLayout* session = new QVBoxLayout();
+        session->setSpacing(0);
+        {
+            QHBoxLayout* features = new QHBoxLayout();
+            {
+                QSpacerItem* space_item = new QSpacerItem(9999, 0, QSizePolicy::Maximum, QSizePolicy::Minimum);
+                features->addSpacerItem(space_item);
+
+                show_history_ = new QPushButton("history", this);
+                features->addWidget(show_history_);
+
+                more_ = new QPushButton("更多", this);
+                features->addWidget(more_);
+            }
+            session->addLayout(features);
+
+            QSplitter* splitter = new QSplitter(Qt::Vertical, this);
+
+            QWidget* history = new QWidget(this);
+            splitter->addWidget(history);
+
+            input_ = new InputWidget(this);
+            input_->SetListeaner(this);
+            splitter->addWidget(input_);
+
+            splitter->setStretchFactor(0, 1);
+            splitter->setStretchFactor(1, 0);
+            session->addWidget(splitter);
+        }
+        main_layout->addLayout(session);
+
+        wid_ = new QWidget(this);
+        wid_->setFixedWidth(200);
+        wid_->hide();
+        main_layout->addWidget(wid_);
+    }
+    this->setLayout(main_layout);
+
+    QObject::connect(show_history_, &QPushButton::released, this, &ChatWidget::slot_BtnShowHistoryReleased);
+
+    this->Refresh();
+}
+
+void ChatWidget::slot_BtnShowHistoryReleased()
+{
+    auto current_size = this->size();
+    if (this->wid_->isHidden()) {
+        this->resize(current_size.width() + 200, current_size.height());
+        this->wid_->setHidden(false);
+    } else {
+        this->resize(current_size.width() - 200, current_size.height());
+        this->wid_->setHidden(true);
+    }
+}
+
+void ChatWidget::UserInput(const QString &text)
+{
+    qDebug() << text;
+}
