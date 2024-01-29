@@ -25,7 +25,14 @@ set(PROJECT_SOURCES
         cache/datacache.h cache/datacache.cpp
 
         widget/loginwidget.h widget/loginwidget.cpp
+        widget/main_widget/chatgroupboard.h widget/main_widget/chatgroupboard.cpp
+        widget/main_widget/userboard.h widget/main_widget/userboard.cpp
+        widget/main_widget/chatsessionlist.h widget/main_widget/chatsessionlist.cpp
+        widget/main_widget/friendlist.h widget/main_widget/friendlist.cpp
+        widget/main_widget/grouplist.h widget/main_widget/grouplist.cpp
         widget/mainwidget.h widget/mainwidget.cpp
+        widget/chat_widget/inputwidget.h widget/chat_widget/inputwidget.cpp
+        widget/chat_widget/chathistorywidget.h widget/chat_widget/chathistorywidget.cpp
         widget/chatwidget.h widget/chatwidget.cpp
 
         data_structure/datasructures.h data_structure/datasructures.cpp

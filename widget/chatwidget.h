@@ -5,31 +5,14 @@
 #include <QTextEdit>
 #include <QPushButton>
 #include <QLineEdit>
+#include <QListWidget>
 
 
 #include "../data_structure/datasructures.h"
 
-/* 输入框 */
-class InputWidget : public QWidget {
-public:
-    explicit InputWidget(QWidget* parent = nullptr);
+#include "chat_widget/chathistorywidget.h"
+#include "chat_widget/inputwidget.h"
 
-    class Listeaner {
-    public:
-        ~Listeaner() = default;
-
-        virtual void UserInput(const QString& text) = 0;
-    };
-
-    void SetListeaner(Listeaner *new_listeaner);
-
-private:
-    QPushButton* image_;
-    QPushButton* more_;
-    QTextEdit* input_;
-
-    Listeaner* listeaner_;
-};
 
 
 /* 聊天对话窗 */
@@ -55,6 +38,9 @@ private:
     /* layout */
     QPushButton* show_history_;
     QPushButton* more_;
+
+    ChatHistoryWidget* history_;
+
     InputWidget* input_;
 
     QWidget* wid_;

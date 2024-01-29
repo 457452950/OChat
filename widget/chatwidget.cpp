@@ -1,45 +1,12 @@
 #include "chatwidget.h"
 
 #include <QBoxLayout>
+#include <QPainter>
+#include <QPalette>
 #include <QSplitter>
 
 #include "../backend/backend.h"
 
-
-/* 输入框 */
-InputWidget::InputWidget(QWidget *parent)
-    : QWidget(parent)
-{
-
-    QVBoxLayout* main_layout = new QVBoxLayout(this);
-    main_layout->setSpacing(0);
-    {
-        QHBoxLayout* buttons_line = new QHBoxLayout();
-        buttons_line->setSpacing(0);
-        {
-            image_ = new QPushButton("image", this);
-            buttons_line->addWidget(image_);
-
-            more_ = new QPushButton("...", this);
-            buttons_line->addWidget(more_);
-
-            QSpacerItem* space_item = new QSpacerItem(9999, 0, QSizePolicy::Maximum, QSizePolicy::Minimum);
-            buttons_line->addSpacerItem(space_item);
-        }
-        main_layout->addLayout(buttons_line);
-
-
-        input_ = new QTextEdit(this);
-        main_layout->addWidget(input_);
-    }
-    this->setLayout(main_layout);
-    this->resize(this->size().width(), 210);
-}
-
-void InputWidget::SetListeaner(Listeaner *new_listeaner)
-{
-    listeaner_ = new_listeaner;
-}
 
 
 /* 聊天对话窗 */
@@ -69,7 +36,17 @@ void ChatWidget::Refresh()
 
 void ChatWidget::initLayout()
 {
+    // 设置背景色
+    auto pal = this->palette();
+    pal.setColor(QPalette::Window, Qt::white);
+    this->setAutoFillBackground(true);
+    this->setPalette(pal);
+
+
+    const int margin = 0;
+
     QHBoxLayout* main_layout = new QHBoxLayout(this);
+    main_layout->setContentsMargins(QMargins(margin, margin, margin, margin));
     main_layout->setSpacing(0);
     {
         QVBoxLayout* session = new QVBoxLayout();
@@ -90,8 +67,8 @@ void ChatWidget::initLayout()
 
             QSplitter* splitter = new QSplitter(Qt::Vertical, this);
 
-            QWidget* history = new QWidget(this);
-            splitter->addWidget(history);
+            history_ = new ChatHistoryWidget(this);
+            splitter->addWidget(history_);
 
             input_ = new InputWidget(this);
             input_->SetListeaner(this);
@@ -129,5 +106,7 @@ void ChatWidget::slot_BtnShowHistoryReleased()
 
 void ChatWidget::UserInput(const QString &text)
 {
-    qDebug() << text;
+    qDebug() << "input : " << text;
 }
+
+
