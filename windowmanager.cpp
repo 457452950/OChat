@@ -51,10 +51,10 @@ void WindowManager::slot_CreateChatSession(std::shared_ptr<ChatGroup> group)
     auto it = chat_wids_.find(uid);
     if (it != chat_wids_.end()) {
         it.value()->show();
-        qDebug() << group->Uid() << group->GroupName() << " window existed, show.";
+        qDebug() << group->Uid() << group->Name() << " window existed, show.";
         return;
     }
-    qDebug() << group->Uid() << group->GroupName() << " window not existed, create.";
+    qDebug() << group->Uid() << group->Name() << " window not existed, create.";
 
     auto chat_widget = new ChatWidget(group);
     this->chat_wids_.insert(uid, chat_widget);

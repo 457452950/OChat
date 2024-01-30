@@ -29,7 +29,7 @@ set(PROJECT_SOURCES
         widget/main_widget/usergroupboard.h widget/main_widget/usergroupboard.cpp
         widget/main_widget/chatsessionlist.h widget/main_widget/chatsessionlist.cpp
         widget/main_widget/friendlist.h widget/main_widget/friendlist.cpp
-        widget/main_widget/grouplist.h widget/main_widget/grouplist.cpp
+        widget/main_widget/chatgrouplist.h widget/main_widget/chatgrouplist.cpp
         widget/mainwidget.h widget/mainwidget.cpp
         widget/chat_widget/inputwidget.h widget/chat_widget/inputwidget.cpp
         widget/chat_widget/chathistorywidget.h widget/chat_widget/chathistorywidget.cpp

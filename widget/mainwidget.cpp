@@ -44,7 +44,7 @@ MainWidget::MainWidget(std::shared_ptr<User> master, QWidget *parent)
                 sub_tab->addTab(this->friend_list_, "好友");
             }
             {
-                this->class_list_ = new GroupList(this);
+                this->class_list_ = new ChatGroupList(this);
                 sub_tab->addTab(this->class_list_, "群聊");
             }
             tab_wid->addTab(sub_tab, "联系人");

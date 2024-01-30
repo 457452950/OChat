@@ -77,7 +77,7 @@ void UserGroupBoard::Refresh()
 {
     if (this->user_) {
         // user
-        this->name_->setText(this->user_->UserName());
+        this->name_->setText(this->user_->Name());
         this->show_label_->setText(this->user_->Signature());
 
         auto img = DataCache::GetInstance()->GetImage(this->user_->GetProfilePixtureUrl());
@@ -86,7 +86,7 @@ void UserGroupBoard::Refresh()
         this->pix_->setPixmap(QPixmap::fromImage(img2));
     } else {
         // group
-        this->name_->setText(this->group_->GroupName());
+        this->name_->setText(this->group_->Name());
         this->show_label_->setText(this->group_->Signature());
 
         auto img = DataCache::GetInstance()->GetImage(this->group_->GetProfilePixtureUrl());

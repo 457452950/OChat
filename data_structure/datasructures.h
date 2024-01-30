@@ -26,8 +26,8 @@ public:
     User() = default;
     ~User() = default;
 
-    QString UserName() const;
-    void SetUserName(const QString &new_user_name);
+    QString Name() const;
+    void SetName(const QString &new_user_name);
 
     QString GetProfilePixtureUrl() const;
     void SetProfilePixtureUrl(const QString &new_profile_pixture_url);
@@ -37,7 +37,7 @@ public:
 
 private:
     // 用户昵称
-    QString user_name_;
+    QString name_;
     // 用户头像
     QString profile_pixture_url_;
     // 用户签名
@@ -65,8 +65,8 @@ public:
     ~ChatGroup() = default;
 
 
-    QString GroupName() const;
-    void SetGroupName(const QString &new_group_name);
+    QString Name() const;
+    void SetName(const QString &new_group_name);
 
     QString GetProfilePixtureUrl() const;
     void SetProfilePixtureUrl(const QString &new_profile_pixture_url);
@@ -83,7 +83,7 @@ public:
 
 private:
     // 群聊昵称
-    QString group_name_;
+    QString name_;
     // 群聊头像
     QString profile_pixture_url_;
     // 群聊签名

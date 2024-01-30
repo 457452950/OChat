@@ -22,26 +22,26 @@ void User::SetSignature(const QString &new_signature)
     signature_ = new_signature;
 }
 
-QString User::UserName() const
+QString User::Name() const
 {
-    return user_name_;
+    return name_;
 }
 
-void User::SetUserName(const QString &new_user_name)
+void User::SetName(const QString &new_user_name)
 {
-    user_name_ = new_user_name;
+    name_ = new_user_name;
 }
 
 
 /* 群聊 */
-QString ChatGroup::GroupName() const
+QString ChatGroup::Name() const
 {
-    return group_name_;
+    return name_;
 }
 
-void ChatGroup::SetGroupName(const QString &new_group_name)
+void ChatGroup::SetName(const QString &new_group_name)
 {
-    group_name_ = new_group_name;
+    name_ = new_group_name;
 }
 
 QString ChatGroup::GetProfilePixtureUrl() const

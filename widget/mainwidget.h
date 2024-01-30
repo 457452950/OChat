@@ -14,7 +14,7 @@
 
 #include "main_widget/chatsessionlist.h"
 #include "main_widget/friendlist.h"
-#include "main_widget/grouplist.h"
+#include "main_widget/chatgrouplist.h"
 #include "main_widget/usergroupboard.h"
 
 
@@ -38,7 +38,7 @@ private:
     UserGroupBoard* master_board_;
     ChatSessionList *user_list_;
     FriendList* friend_list_;
-    GroupList* class_list_;
+    ChatGroupList* class_list_;
 
     // data
     std::shared_ptr<User> master_user_;

@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 #ifdef QT_DEBUG
     qDebug() << "\n-------------------------------------\n"
              << "   DEBUG MODEL\n"
-             << " test user name :" << ClientSetting::DEBUG_GetDebugUser()->UserName() << "\n"
+             << " test user name :" << ClientSetting::DEBUG_GetDebugUser()->Name() << "\n"
              << " test password :" << ClientSetting::DEBUG_login_password() << "\n"
              << "-------------------------------------"
         ;

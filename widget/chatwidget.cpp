@@ -29,8 +29,8 @@ ChatWidget::ChatWidget(std::shared_ptr<ChatGroup> group, QWidget *parent)
 void ChatWidget::Refresh()
 {
     Q_ASSERT(this->group_);
-
-    this->setWindowTitle(this->group_->GroupName());
+    
+    this->setWindowTitle(this->group_->Name());
 
 }
 
