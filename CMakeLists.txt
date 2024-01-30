@@ -25,8 +25,8 @@ set(PROJECT_SOURCES
         cache/datacache.h cache/datacache.cpp
 
         widget/loginwidget.h widget/loginwidget.cpp
-        widget/main_widget/chatgroupboard.h widget/main_widget/chatgroupboard.cpp
-        widget/main_widget/userboard.h widget/main_widget/userboard.cpp
+
+        widget/main_widget/usergroupboard.h widget/main_widget/usergroupboard.cpp
         widget/main_widget/chatsessionlist.h widget/main_widget/chatsessionlist.cpp
         widget/main_widget/friendlist.h widget/main_widget/friendlist.cpp
         widget/main_widget/grouplist.h widget/main_widget/grouplist.cpp
@@ -46,6 +46,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(OChat
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        res.qrc
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET OChat APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

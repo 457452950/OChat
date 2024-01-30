@@ -3,7 +3,7 @@
 #include <QBoxLayout>
 
 #include "../../backend/backend.h"
-#include "chatgroupboard.h"
+#include "usergroupboard.h"
 
 /*
  *  好友、群聊列表窗口
@@ -46,7 +46,7 @@ void GroupList::AddGroup(QString party, std::shared_ptr<ChatGroup> group)
         auto n = new QTreeWidgetItem;
         n->setSizeHint(0, {100, 100});
         item->addChild(n);
-        ChatGroupBoard* board = new ChatGroupBoard(this);
+        UserGroupBoard* board = new UserGroupBoard(this);
         board->SetGroup(group);
         this->root_->setItemWidget(n, 0, board);
     }

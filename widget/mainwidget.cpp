@@ -10,8 +10,6 @@
 #include "../config/clientsetting.h"
 #include "../cache/datacache.h"
 
-#include "main_widget/chatgroupboard.h"
-
 
 /*
  *  主页面
@@ -28,13 +26,13 @@ MainWidget::MainWidget(std::shared_ptr<User> master, QWidget *parent)
     QVBoxLayout* mainLayout = new QVBoxLayout;
     mainLayout->setContentsMargins(0, 0, 0, 0);
     {
-        master_board_ = new UserBoard(this);
+        master_board_ = new UserGroupBoard(this);
         master_board_->setMaximumHeight(100);
         mainLayout->addWidget(master_board_);
     }
     {
         auto tab_wid = new QTabWidget(this);
-        mainLayout->addWidget(tab_wid);
+        tab_wid->tabBar()->setExpanding(true);
         {
             user_list_ = new ChatSessionList(this);
             tab_wid->addTab(user_list_, "消息");
@@ -51,6 +49,7 @@ MainWidget::MainWidget(std::shared_ptr<User> master, QWidget *parent)
             }
             tab_wid->addTab(sub_tab, "联系人");
         }
+        mainLayout->addWidget(tab_wid);
     }
 
 

@@ -5,7 +5,7 @@
 
 #include "../../windowmanager.h"
 #include "../../backend/backend.h"
-#include "chatgroupboard.h"
+#include "usergroupboard.h"
 
 
 /*
@@ -43,8 +43,9 @@ ChatSessionList::ChatSessionList(QWidget *parent) : QWidget(parent)
 
 void ChatSessionList::AddChatSession(std::shared_ptr<ChatGroup> group)
 {
-    ChatGroupBoard* board = new ChatGroupBoard(this);
+    UserGroupBoard* board = new UserGroupBoard(this);
     board->SetGroup(group);
+    board->setMaximumHeight(90);
 
     QListWidgetItem* item = new QListWidgetItem;
     item->setSizeHint({0, 90});
@@ -60,9 +61,9 @@ void ChatSessionList::slot_ItemDoubleClicked(QListWidgetItem *item)
     qDebug() << "item double clicked " << item->text() << " " << index.row();
 
     QWidget* widget = this->list_widget_->itemWidget(item);
-    ChatGroupBoard* board = static_cast<ChatGroupBoard*>(widget);
+    UserGroupBoard* board = static_cast<UserGroupBoard*>(widget);
 
-    WindowManager::GetInstance()->slot_CreateChatSession(board->Group());
+    WindowManager::GetInstance()->slot_CreateChatSession(board->GetGroup());
 }
 
 void ChatSessionList::slot_ListWidRightClicked(const QPoint &pos)

@@ -15,7 +15,7 @@
 #include "main_widget/chatsessionlist.h"
 #include "main_widget/friendlist.h"
 #include "main_widget/grouplist.h"
-#include "main_widget/userboard.h"
+#include "main_widget/usergroupboard.h"
 
 
 /*
@@ -35,7 +35,7 @@ private:
 
 private:
     // layout
-    UserBoard* master_board_;
+    UserGroupBoard* master_board_;
     ChatSessionList *user_list_;
     FriendList* friend_list_;
     GroupList* class_list_;

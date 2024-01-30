@@ -10,6 +10,7 @@
  *  对话记录
  */
 class ChatEntryWidget : public QWidget {
+    Q_OBJECT
 public:
     explicit ChatEntryWidget(QWidget* parent);
 
@@ -23,6 +24,7 @@ private:
  *  对话展示框
  */
 class ChatHistoryWidget : public QWidget {
+    Q_OBJECT
 public:
     explicit ChatHistoryWidget(QWidget* parent);
 
