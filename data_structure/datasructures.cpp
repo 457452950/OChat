@@ -82,3 +82,16 @@ void ChatGroup::SetMasterUid(const QString &new_master_uid)
 {
     master_uid_ = new_master_uid;
 }
+
+void ChatHistory::SetFromTo(const QString &from, const QString &to)
+{
+    this->from_ = from;
+    this->to_ = to;
+
+    if (User::CheckUserUid(to)) {
+        this->SetUid(QString("%1_%2_%3").arg(this->from_).arg(this->to_).arg(this->date_));
+    } else {
+        this->SetUid(QString("%1_%2_%3").arg(this->to_).arg(this->from_).arg(this->date_));
+    }
+    qDebug() << "chat history uid: " << this->Uid();
+}

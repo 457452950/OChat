@@ -30,6 +30,37 @@ ChatSessionList::ChatSessionList(QWidget *parent) : QWidget(parent)
     this->list_widget_->setContextMenuPolicy(Qt::CustomContextMenu);
     QObject::connect(this->list_widget_, &QListWidget::customContextMenuRequested, this, &ChatSessionList::slot_ListWidRightClicked);
 
+    /* init menu */
+    menu_ = new QMenu(this);
+    {
+        QAction* action_open = new QAction("对话");
+        connect(action_open, &QAction::triggered, [this] {
+            if (this->current_item_)
+                this->slot_ItemDoubleClicked(this->current_item_);
+        });
+        menu_->addAction(action_open);
+    }
+    {
+        QAction* action_drop = new QAction("drop");
+        connect(action_drop, &QAction::triggered, [this] {
+            if (this->current_item_) {
+                auto wid = this->list_widget_->itemWidget(this->current_item_);
+                UserGroupBoard* board = static_cast<UserGroupBoard*>(wid);
+                auto group = board->GetGroup();
+                Q_ASSERT(group);
+                this->list_widget_->removeItemWidget(this->current_item_);
+
+                delete this->current_item_;
+                delete wid;
+
+                this->current_item_ = nullptr;
+
+                WindowManager::GetInstance()->slot_DestroyChatSession(group->Uid());
+            }
+        });
+        menu_->addAction(action_drop);
+    }
+
 #ifdef QT_DEBUG
     {
         int num = 1000'0000;
@@ -75,16 +106,7 @@ void ChatSessionList::slot_ListWidRightClicked(const QPoint &pos)
         qDebug() << "click item empty";
         return;
     }
+    current_item_ = item;
 
-    QMenu* menu = new QMenu(this->list_widget_);
-    {
-        QAction* action_open = new QAction("open");
-        connect(action_open, &QAction::triggered, [=] {
-            auto index = this->list_widget_->indexFromItem(item);
-            qDebug() << index.row();
-        });
-
-        menu->addAction(action_open);
-    }
-    menu->popup(this->list_widget_->mapToGlobal(pos));
+    menu_->popup(this->list_widget_->mapToGlobal(pos));
 }

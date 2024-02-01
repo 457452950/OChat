@@ -26,6 +26,9 @@ private:
 private:
     // layout
     QListWidget* list_widget_;
+
+    QMenu* menu_;
+    QListWidgetItem* current_item_{nullptr};
 };
 
 

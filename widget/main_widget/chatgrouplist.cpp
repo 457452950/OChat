@@ -71,7 +71,7 @@ void ChatGroupList::AddChatGroup(QString group_str, std::shared_ptr<ChatGroup> c
     QVector<_Group::chat_group_item>& users = it->second->chat_groups_items;
     auto user_item = new PrivateListItem(group_str, false);
     user_item->setSizeHint(QSize(20, 60));
-    qDebug() << this->root_->indexFromItem(users[0].item) << users[0].item;
+    // qDebug() << this->root_->indexFromItem(users[0].item) << users[0].item;
 
     int index = -1;
     // 寻找最后一个不大于的索引
@@ -81,7 +81,7 @@ void ChatGroupList::AddChatGroup(QString group_str, std::shared_ptr<ChatGroup> c
         }
         index = i;
     }
-    qDebug() << "index " << index;
+    // qDebug() << "index " << index;
     if (index == -1) {
         index = this->root_->indexFromItem(users[0].item).row();
         users.insert(0, {chat_group, user_item});
@@ -90,7 +90,7 @@ void ChatGroupList::AddChatGroup(QString group_str, std::shared_ptr<ChatGroup> c
         index = this->root_->indexFromItem(users[index].item).row() + 1;
         users.insert(i + 1, {chat_group, user_item});
     }
-    qDebug() << "index " << index;
+    // qDebug() << "index " << index;
 
     // add to layout
     auto user_wid = new UserGroupBoard(this);

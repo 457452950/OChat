@@ -15,14 +15,12 @@ ChatWidget::ChatWidget(QString group_uid, QWidget *parent)
 {
     this->group_ = Backend::GetInstance()->GetGroupFromUid(group_uid);
 
-    this->resize({800, 600});
     this->initLayout();
 }
 
 ChatWidget::ChatWidget(std::shared_ptr<ChatGroup> group, QWidget *parent)
     : QWidget(parent), group_(group)
 {
-    this->resize({800, 600});
     this->initLayout();
 }
 
@@ -31,11 +29,15 @@ void ChatWidget::Refresh()
     Q_ASSERT(this->group_);
     
     this->setWindowTitle(this->group_->Name());
-
 }
 
 void ChatWidget::initLayout()
 {
+    this->resize({800, 600});
+    this->setMinimumWidth(600);
+    this->setMinimumHeight(450);
+
+
     // 设置背景色
     auto pal = this->palette();
     pal.setColor(QPalette::Window, Qt::white);

@@ -22,10 +22,11 @@ public:
         std::call_once(demo_user_flag, [=](){
             demo_user->SetUid("10000");
             demo_user->SetName("asd");
-            demo_user->SetSignature("sigsig_signature");
+            demo_user->SetSignature("sigsig_gnature");
             demo_user->SetProfilePixtureUrl("H:/Resources/paimeng.jpg");
 
             Backend::GetInstance()->AddUser(demo_user);
+            Backend::GetInstance()->SetSelf(demo_user);
 
             std::shared_ptr<User> user2 = std::make_shared<User>();
             user2->SetUid("10001");

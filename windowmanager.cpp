@@ -50,7 +50,15 @@ void WindowManager::slot_CreateChatSession(std::shared_ptr<ChatGroup> group)
     auto uid = group->Uid();
     auto it = chat_wids_.find(uid);
     if (it != chat_wids_.end()) {
-        it.value()->show();
+        auto wid = it.value();
+        if (wid->isHidden()) {
+            wid->show();
+        } else if (wid->isMinimized()){
+            wid->showNormal();
+        } else {
+            wid->activateWindow();
+        }
+
         qDebug() << group->Uid() << group->Name() << " window existed, show.";
         return;
     }
@@ -64,11 +72,12 @@ void WindowManager::slot_CreateChatSession(std::shared_ptr<ChatGroup> group)
 void WindowManager::slot_DestroyChatSession(QString uid)
 {
     auto it = chat_wids_.find(uid);
+    auto wid = it.value();
 
-    Q_ASSERT(it != chat_wids_.end());
-
-    delete it.value();
-    chat_wids_.erase(it);
+    if (wid->isHidden()){
+        delete wid;
+        chat_wids_.erase(it);
+    }
 }
 
 void WindowManager::slot_DestroyAllChatSession()

@@ -104,7 +104,7 @@ void FriendList::AddUser(QString group_str, std::shared_ptr<User> user)
     QVector<_Group::user_item>& users = it->second->users_items;
     auto user_item = new PrivateListItem(group_str, false);
     user_item->setSizeHint(QSize(20, 60));
-    qDebug() << this->root_->indexFromItem(users[0].item) << users[0].item;
+    // qDebug() << this->root_->indexFromItem(users[0].item) << users[0].item;
 
     int index = -1;
     // 寻找最后一个不大于的索引
@@ -114,7 +114,7 @@ void FriendList::AddUser(QString group_str, std::shared_ptr<User> user)
         }
         index = i;
     }
-    qDebug() << "index " << index;
+    // qDebug() << "index " << index;
     if (index == -1) {
         index = this->root_->indexFromItem(users[0].item).row();
         users.insert(0, {user, user_item});
@@ -123,7 +123,7 @@ void FriendList::AddUser(QString group_str, std::shared_ptr<User> user)
         index = this->root_->indexFromItem(users[index].item).row() + 1;
         users.insert(i + 1, {user, user_item});
     }
-    qDebug() << "index " << index;
+    // qDebug() << "index " << index;
 
     // add to layout
     auto user_wid = new UserGroupBoard(this);

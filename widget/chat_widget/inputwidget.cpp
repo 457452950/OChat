@@ -72,7 +72,7 @@ void InputWidget::slot_BtnSendReleased()
     auto text = this->input_->toPlainText();
     this->input_->clear();
 
-    if (listeaner_) {
+    if (listeaner_ && !text.isEmpty()) {
         listeaner_->UserInput(text);
     }
 }
