@@ -13,7 +13,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_definitions(-D_WIN32_WINNT=0x0A00)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets WebSockets)
 find_package(asio CONFIG REQUIRED)
 find_package(OpenSSL REQUIRED)
 
@@ -67,7 +67,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(OChat PRIVATE Qt${QT_VERSION_MAJOR}::Widgets asio::asio OpenSSL::SSL OpenSSL::Crypto)
+target_link_libraries(OChat PRIVATE Qt${QT_VERSION_MAJOR}::Widgets asio::asio OpenSSL::SSL OpenSSL::Crypto Qt${QT_VERSION_MAJOR}::WebSockets)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

@@ -16,7 +16,9 @@ private:
     static Backend* instance_;
 
 public:
+#ifdef QT_DEBUG
     void SetSelf(std::shared_ptr<User> self) { self_ = self; }
+#endif
     std::shared_ptr<User> SelfUser() { return self_; }
 
     std::shared_ptr<User> GetUserFromUid(QString uid);

@@ -3,6 +3,7 @@
 #include <QBoxLayout>
 #include <QPainter>
 #include <QPainterPath>
+#include <QScrollBar>
 
 #include "../../backend/backend.h"
 #include "../../cache/datacache.h"
@@ -14,9 +15,11 @@ ChatEntryWidget::ChatEntryWidget(QListWidgetItem* item, QWidget *parent)
     : QWidget(parent), item_(item){
     pic_ = new QLabel(this);
 
-    text_ = new QLabel(this);
-    text_->setWordWrap(true);
-    text_->hide();
+    message_ = new QLabel(this);
+    message_->setWordWrap(true);
+    message_->hide();
+
+    extra_ = new QLabel(this);
 }
 
 void ChatEntryWidget::SetSender(std::shared_ptr<User> user, bool self)
@@ -34,25 +37,31 @@ void ChatEntryWidget::SetSender(std::shared_ptr<User> user, bool self)
     mainLayout->setContentsMargins(main_margin, main_margin, main_margin, main_margin);
 
     if (self_) {
-        mainLayout->addWidget(text_);
+        extra_->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+        mainLayout->addWidget(extra_);
+        mainLayout->addWidget(message_);
         mainLayout->addWidget(pic_);
     } else {
         mainLayout->addWidget(pic_);
-        mainLayout->addWidget(text_);
+        mainLayout->addWidget(message_);
+        mainLayout->addWidget(extra_);
+        extra_->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     }
 
     this->setLayout(mainLayout);
 }
 
-void ChatEntryWidget::SetText(QString text)
+void ChatEntryWidget::SetText(QString text, QDateTime time)
 {
-    text_->setText(text);
-    text_->setTextInteractionFlags(Qt::TextSelectableByMouse);
-    auto font = text_->font();
+    message_->setText(text);
+    message_->setTextInteractionFlags(Qt::TextSelectableByMouse);
+    auto font = message_->font();
     font.setPointSize(13);
-    text_->setFont(font);
-    text_->show();
-    text_->setMargin(text_margin);
+    message_->setFont(font);
+    message_->show();
+    message_->setMargin(text_margin);
+
+    extra_->setText(time.toString("yy.M.d h:m:s.z"));
 }
 
 void ChatEntryWidget::paintEvent(QPaintEvent *event)
@@ -70,13 +79,15 @@ void ChatEntryWidget::paintEvent(QPaintEvent *event)
     // qDebug() << "paint event";
 
     auto t = text_margin - text_rounding;
-    auto&& rect = QRect(text_->pos() + QPoint{t, t}, text_->size() - QSize{2 * t, 2 * t});
+    auto&& rect = QRect(message_->pos() + QPoint{t, t}, message_->size() - QSize{2 * t, 2 * t});
     QPainterPath path;
     path.addRoundedRect(rect, text_rounding, text_rounding);
     painter.drawPath(path);
     painter.fillPath(path, brush);
 
     painter.drawRect(QRect(pic_->pos(), pic_->size()));
+
+    // painter.drawRect(QRect(extra_->pos(), extra_->size()));
 }
 
 void ChatEntryWidget::resizeEvent(QResizeEvent *event)
@@ -86,9 +97,9 @@ void ChatEntryWidget::resizeEvent(QResizeEvent *event)
         return;
     }
 
-    // qDebug() << "resize event" << event->oldSize() << event->size() << text_->sizeHint() << text_->sizePolicy() << text_->heightForWidth(event->size().width() - 32);
+    // qDebug() << "resize event" << event->oldSize() << event->size() << message_->sizeHint() << message_->sizePolicy() << message_->heightForWidth(event->size().width() - 32);
 
-    auto label_height = text_->heightForWidth(event->size().width() - header_pix_size - 2 * main_margin);
+    auto label_height = message_->heightForWidth(event->size().width() - header_pix_size - 2 * main_margin);
     auto wid_height = std::max(label_height, pic_->height()) + 2 * main_margin;
 
     auto size = event->size();
@@ -117,6 +128,8 @@ ChatHistoryWidget::ChatHistoryWidget(QWidget *parent)
 
     chat_entrys_->setSelectionMode(QAbstractItemView::NoSelection);
     chat_entrys_->setUniformItemSizes(false);
+    chat_entrys_->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    chat_entrys_->verticalScrollBar()->setSingleStep(10);
 
 #ifdef QT_DEBUG
     {
@@ -128,9 +141,7 @@ ChatHistoryWidget::ChatHistoryWidget(QWidget *parent)
         history->SetMessageText("啊实打实大苏打撒撒入发放");
         this->AddHistory(history);
 
-        history = std::make_shared<ChatHistory>();
-        history->SetFromTo("10001", "10000");
-        history->SetMessageText(
+        QString msg_text =
 R"(class ChatEntryWidget : public QWidget {
 public:
     explicit ChatEntryWidget(QListWidgetItem* item, QWidget* parent);
@@ -150,7 +161,21 @@ private:
     bool self_;
     QLabel* pic_;
     QLabel* text_;
-};)"        );
+};)";
+
+        history = std::make_shared<ChatHistory>();
+        history->SetFromTo("10001", "10000");
+        history->SetMessageText( msg_text);
+        this->AddHistory(history);
+
+        history = std::make_shared<ChatHistory>();
+        history->SetFromTo("10001", "10000");
+        history->SetMessageText( msg_text);
+        this->AddHistory(history);
+
+        history = std::make_shared<ChatHistory>();
+        history->SetFromTo("10001", "10000");
+        history->SetMessageText( msg_text);
         this->AddHistory(history);
     }
 #endif
@@ -164,6 +189,9 @@ void ChatHistoryWidget::AddHistory(std::shared_ptr<ChatHistory> history)
 
     int index = -1;
     for (int i = 0; i < entrys_.size(); ++i) {
+        if (entrys_[i].history == history) {
+            return;
+        }
         if (entrys_[i].history->Date() > history->Date()) {
             break;
         }
@@ -178,6 +206,6 @@ void ChatHistoryWidget::AddHistory(std::shared_ptr<ChatHistory> history)
 
     auto uid = history->From();
     wid->SetSender(Backend::GetInstance()->GetUserFromUid(uid), uid == Backend::GetInstance()->SelfUser()->Uid());
-    wid->SetText(history->MessageText());
+    wid->SetText(history->MessageText(), history->Date());
     qDebug() << history->Date();
 }

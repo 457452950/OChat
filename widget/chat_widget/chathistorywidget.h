@@ -18,7 +18,7 @@ public:
 
     void SetSender(std::shared_ptr<User> user, bool self);
 
-    void SetText(QString text);
+    void SetText(QString text, QDateTime time);
 
     int GetHight();
 
@@ -29,8 +29,10 @@ private:
     QListWidgetItem* item_;
 
     bool self_;
+
     QLabel* pic_;
-    QLabel* text_;
+    QLabel* message_;
+    QLabel* extra_;
 
     static int main_margin;
     static int text_margin;
@@ -41,7 +43,7 @@ private:
 inline int ChatEntryWidget::main_margin = 5;
 inline int ChatEntryWidget::text_margin = 15;
 inline int ChatEntryWidget::text_rounding = 5;
-inline int ChatEntryWidget::header_pix_size = 40;
+inline int ChatEntryWidget::header_pix_size = 42;
 
 
 /*
