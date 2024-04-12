@@ -51,7 +51,7 @@ LoginWidget::LoginWidget(QWidget *parent)
     }
 
     this->setLayout(mainLayout);
-    this->setFixedSize(ClientSetting::GetInstance()->GetLoginWindowSize());
+    this->setFixedSize(SETTING->LoginWindowSize);
 }
 
 LoginWidget::~LoginWidget() {}

@@ -17,11 +17,9 @@
 MainWidget::MainWidget(std::shared_ptr<User> master, QWidget *parent)
     : QWidget{parent}, master_user_(master)
 {
-    this->resize(ClientSetting::GetInstance()->GetMainWindowSize());
+    this->resize(SETTING->MainWindowSize);
     this->setWindowFlag(Qt::WindowMaximizeButtonHint, false);
-
-    this->setMinimumWidth(390);
-    this->setMinimumHeight(720);
+    this->setMinimumSize(SETTING->MainWindowMinimumSize);
 
     QVBoxLayout* mainLayout = new QVBoxLayout;
     mainLayout->setContentsMargins(0, 0, 0, 0);

@@ -17,11 +17,16 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets WebSockets)
 find_package(asio CONFIG REQUIRED)
 find_package(OpenSSL REQUIRED)
 
+add_subdirectory("third_party/lazy_box")
+
 set(PROJECT_SOURCES
         main.cpp
 
         log/logger.h log/logger.cpp
+
         config/clientsetting.h config/clientsetting.cpp
+        config/config.h config/config.cpp
+
         cache/datacache.h cache/datacache.cpp
 
         widget/loginwidget.h widget/loginwidget.cpp
@@ -67,7 +72,8 @@ else()
     endif()
 endif()
 
-target_link_libraries(OChat PRIVATE Qt${QT_VERSION_MAJOR}::Widgets asio::asio OpenSSL::SSL OpenSSL::Crypto Qt${QT_VERSION_MAJOR}::WebSockets)
+target_include_directories(OChat PRIVATE "third_party/lazy_box/include")
+target_link_libraries(OChat PRIVATE Qt${QT_VERSION_MAJOR}::Widgets asio::asio OpenSSL::SSL OpenSSL::Crypto Qt${QT_VERSION_MAJOR}::WebSockets lbox)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

@@ -12,8 +12,8 @@
 
 int main(int argc, char *argv[])
 {
+    ClientSetting::GetInstance();
     LoggerInit();
-    ClientSetting::Init();
     DataCache::Init();
 
     QApplication a(argc, argv);
@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     auto res = a.exec();
 
     WindowManager::Close();
-    ClientSetting::Clear();
+    ClientSetting::Destroy();
     DataCache::Clear();
 
     return res;

@@ -6,7 +6,7 @@
 #include <QSplitter>
 
 #include "../backend/backend.h"
-
+#include "../config/clientsetting.h"
 
 
 /* 聊天对话窗 */
@@ -33,9 +33,8 @@ void ChatWidget::Refresh()
 
 void ChatWidget::initLayout()
 {
-    this->resize({800, 600});
-    this->setMinimumWidth(600);
-    this->setMinimumHeight(450);
+    this->resize(SETTING->ChatWindowSize);
+    this->setMinimumSize(SETTING->ChatWindowMinimumSize);
 
 
     // 设置背景色
@@ -68,20 +67,22 @@ void ChatWidget::initLayout()
             session->addLayout(features);
 
             QSplitter* splitter = new QSplitter(Qt::Vertical, this);
+            {
+                history_ = new ChatHistoryWidget(this);
+                splitter->addWidget(history_);
 
-            history_ = new ChatHistoryWidget(this);
-            splitter->addWidget(history_);
+                input_ = new InputWidget(this);
+                input_->SetListeaner(this);
+                splitter->addWidget(input_);
 
-            input_ = new InputWidget(this);
-            input_->SetListeaner(this);
-            splitter->addWidget(input_);
-
-            splitter->setStretchFactor(0, 1);
-            splitter->setStretchFactor(1, 0);
+                splitter->setStretchFactor(0, 1);
+                splitter->setStretchFactor(1, 0);
+            }
             session->addWidget(splitter);
         }
         main_layout->addLayout(session);
 
+        // note : more chat history
         wid_ = new QWidget(this);
         wid_->setFixedWidth(200);
         wid_->hide();

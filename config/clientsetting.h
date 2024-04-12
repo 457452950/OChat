@@ -4,15 +4,36 @@
 #include <QSize>
 #include <mutex>
 
-#include "../backend/backend.h"
+#include <lazybox/toy/Instance.hpp>
+
+#include "config.h"
 #include "../data_structure/datasructures.h"
 
-class ClientSetting
+#ifdef QT_DEBUG
+#include "../backend/backend.h"
+#endif
+
+class ClientSetting : public lbox::Instance<ClientSetting>
 {
+    friend class  lbox::Instance<ClientSetting>;
+
 public:
-    static ClientSetting* Init();
-    static void Clear();
-    static ClientSetting* GetInstance();
+
+    // ui setting
+    const QSize MainWindowSize = {300, 800};
+    const QSize MainWindowMinimumSize = {390, 720};
+    const QSize LoginWindowSize = {300, 200};
+    const QSize ChatWindowSize = {800, 600};
+    const QSize ChatWindowMinimumSize = {600, 450};
+
+
+    // config
+    Config config;
+
+private:
+    ClientSetting();
+
+public:
 
 #ifdef QT_DEBUG
     static QString DEBUG_login_password() { return "asd"; }
@@ -70,15 +91,8 @@ public:
     }
 #endif
 
-private:
-    static ClientSetting* instance_;
-    ClientSetting();
-
-public:
-    QSize GetMainWindowSize();
-    QSize GetLoginWindowSize();
-    QSize GetChatWindowDefaultSize();
-
 };
+
+#define SETTING ClientSetting::GetInstance()
 
 #endif // CLIENTSETTING_H

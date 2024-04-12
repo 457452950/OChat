@@ -1,9 +1,10 @@
 #include "logger.h"
 
 #include <QtLogging>
-#include <QString>
+
+#include "../config/clientsetting.h"
 
 void LoggerInit()
 {
-    qSetMessagePattern(QString(LOG_MESSAGE_PATTERN));
+    qSetMessagePattern(SETTING->config.log_formater());
 }
