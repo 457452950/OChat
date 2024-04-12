@@ -22,7 +22,7 @@ ChatEntryWidget::ChatEntryWidget(QListWidgetItem* item, QWidget *parent)
     extra_ = new QLabel(this);
 }
 
-void ChatEntryWidget::SetSender(std::shared_ptr<User> user, bool self)
+void ChatEntryWidget::SetSender(std::shared_ptr<UIUser> user, bool self)
 {
     auto img = DataCache::GetInstance()->GetImage(user->GetProfilePixtureUrl());
     auto s = std::min(img->width(), img->height());
@@ -133,8 +133,8 @@ ChatHistoryWidget::ChatHistoryWidget(QWidget *parent)
 
 #ifdef QT_DEBUG
     {
-        Q_ASSERT(User::CheckUserUid("10000") == true);
-        Q_ASSERT(User::CheckUserUid("1000") == false);
+        Q_ASSERT(UIUser::CheckUserUid("10000") == true);
+        Q_ASSERT(UIUser::CheckUserUid("1000") == false);
 
         auto history = std::make_shared<ChatHistory>();
         history->SetFromTo("10000", "10001");

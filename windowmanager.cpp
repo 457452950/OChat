@@ -33,7 +33,7 @@ WindowManager::WindowManager()
     this->login_wid_->show();
 }
 
-void WindowManager::slot_LoginSuccess(std::shared_ptr<User> master)
+void WindowManager::slot_LoginSuccess(std::shared_ptr<UIUser> master)
 {
     if (this->main_wid_ != nullptr) {
         delete this->main_wid_;

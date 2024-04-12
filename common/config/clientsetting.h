@@ -3,14 +3,15 @@
 
 #include <QSize>
 #include <mutex>
+#include <QRegularExpression>
 
 #include <lazybox/toy/Instance.hpp>
 
 #include "config.h"
-#include "../data_structure/datasructures.h"
 
 #ifdef QT_DEBUG
-#include "../backend/backend.h"
+#include "../../backend/backend.h"
+#include "../../data_structure/datasructures.h"
 #endif
 
 class ClientSetting : public lbox::Instance<ClientSetting>
@@ -26,6 +27,14 @@ public:
     const QSize ChatWindowSize = {800, 600};
     const QSize ChatWindowMinimumSize = {600, 450};
 
+    // room
+    const QRegularExpression UserUidRegStr      {"^\\d{5}$"};
+                                                // uid_uid
+    const QRegularExpression ChatUidRegStr      {"^\\d{5}_\\d{5}$"};
+    const QRegularExpression RoomUidRegStr      {"^\\d{8}$"};
+                                                // roomid_from_to_date
+    const QRegularExpression ChatEntryUidRegStr {"^\\d{8}_\\d{5}_\\d{5}_\\d+$"};
+
 
     // config
     Config config;
@@ -37,8 +46,8 @@ public:
 
 #ifdef QT_DEBUG
     static QString DEBUG_login_password() { return "asd"; }
-    static std::shared_ptr<User> DEBUG_GetDebugUser() {
-        static std::shared_ptr<User> demo_user = std::make_shared<User>();
+    static std::shared_ptr<UIUser> DEBUG_GetDebugUser() {
+        static std::shared_ptr<UIUser> demo_user = std::make_shared<UIUser>();
         static std::once_flag demo_user_flag;
         std::call_once(demo_user_flag, [=](){
             demo_user->SetUid("10000");
@@ -49,7 +58,7 @@ public:
             Backend::GetInstance()->AddUser(demo_user);
             Backend::GetInstance()->SetSelf(demo_user);
 
-            std::shared_ptr<User> user2 = std::make_shared<User>();
+            std::shared_ptr<UIUser> user2 = std::make_shared<UIUser>();
             user2->SetUid("10001");
             user2->SetName("asd2");
             user2->SetSignature("sigsig_signature2");

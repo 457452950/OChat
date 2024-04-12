@@ -16,7 +16,7 @@ class ChatEntryWidget : public QWidget {
 public:
     explicit ChatEntryWidget(QListWidgetItem* item, QWidget* parent);
 
-    void SetSender(std::shared_ptr<User> user, bool self);
+    void SetSender(std::shared_ptr<UIUser> user, bool self);
 
     void SetText(QString text, QDateTime time);
 

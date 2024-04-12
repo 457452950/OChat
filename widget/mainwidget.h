@@ -25,7 +25,7 @@ class MainWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MainWidget(std::shared_ptr<User> master, QWidget *parent = nullptr);
+    explicit MainWidget(std::shared_ptr<UIUser> master, QWidget *parent = nullptr);
 
 signals:
 
@@ -41,7 +41,7 @@ private:
     ChatGroupList* class_list_;
 
     // data
-    std::shared_ptr<User> master_user_;
+    std::shared_ptr<UIUser> master_user_;
 };
 
 #endif // MAINWIDGET_H

@@ -67,7 +67,7 @@ FriendList::FriendList(QWidget *parent) : QWidget(parent)
     // this->root_->setSelectionMode(QAbstractItemView::NoSelection);
 }
 
-void FriendList::AddUser(QString group_str, std::shared_ptr<User> user)
+void FriendList::AddUser(QString group_str, std::shared_ptr<UIUser> user)
 {
     auto it = this->groups_.find(group_str);
     if (it == this->groups_.end()) {

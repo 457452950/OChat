@@ -14,10 +14,10 @@ class UserGroupBoard : public QWidget {
 public:
     explicit UserGroupBoard(QWidget *parent = nullptr);
 
-    void SetUser(std::shared_ptr<User> user);
+    void SetUser(std::shared_ptr<UIUser> user);
     void SetGroup(std::shared_ptr<ChatGroup> user);
 
-    std::shared_ptr<User> GetUser() {return user_;}
+    std::shared_ptr<UIUser> GetUser() {return user_;}
     std::shared_ptr<ChatGroup> GetGroup() {return group_;}
 
     void Refresh();
@@ -37,7 +37,7 @@ private:
     QLabel* show_label_;
 
     /* data */
-    std::shared_ptr<User> user_;
+    std::shared_ptr<UIUser> user_;
     std::shared_ptr<ChatGroup> group_;
 };
 

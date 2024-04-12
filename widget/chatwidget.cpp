@@ -6,7 +6,7 @@
 #include <QSplitter>
 
 #include "../backend/backend.h"
-#include "../config/clientsetting.h"
+#include "../common/config/clientsetting.h"
 
 
 /* 聊天对话窗 */

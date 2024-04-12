@@ -22,10 +22,10 @@ add_subdirectory("third_party/lazy_box")
 set(PROJECT_SOURCES
         main.cpp
 
-        log/logger.h log/logger.cpp
+        common/log/logger.h common/log/logger.cpp
 
-        config/clientsetting.h config/clientsetting.cpp
-        config/config.h config/config.cpp
+        common/config/clientsetting.h common/config/clientsetting.cpp
+        common/config/config.h common/config/config.cpp
 
         cache/datacache.h cache/datacache.cpp
 
@@ -42,7 +42,11 @@ set(PROJECT_SOURCES
 
         data_structure/datasructures.h data_structure/datasructures.cpp
 
+        backend/Room/Uid.h
         backend/backend.h backend/backend.cpp
+        backend/Room/clientroom.h backend/Room/clientroom.cpp
+        backend/Room/user.h backend/Room/user.cpp
+        backend/Room/chatentry.h backend/Room/chatentry.cpp
 
         windowmanager.h windowmanager.cpp
 )

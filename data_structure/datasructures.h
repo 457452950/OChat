@@ -28,10 +28,10 @@ private:
  *
  * uid : 10000 ~ 99999
  */
-class User : public Unit {
+class UIUser : public Unit {
 public:
-    User() = default;
-    ~User() = default;
+    UIUser() = default;
+    ~UIUser() = default;
 
     QString Name() const;
     void SetName(const QString &new_user_name);
@@ -58,7 +58,7 @@ private:
     static QRegularExpression user_uid_regix;
 };
 
-inline QRegularExpression User::user_uid_regix = QRegularExpression{"^\\d{5}$"};
+inline QRegularExpression UIUser::user_uid_regix = QRegularExpression{"^\\d{5}$"};
 
 /**
  * 聊天记录

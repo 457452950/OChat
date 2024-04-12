@@ -2,32 +2,32 @@
 
 
 /* 用户 */
-QString User::GetProfilePixtureUrl() const
+QString UIUser::GetProfilePixtureUrl() const
 {
     return profile_pixture_url_;
 }
 
-void User::SetProfilePixtureUrl(const QString &new_profile_pixture_url)
+void UIUser::SetProfilePixtureUrl(const QString &new_profile_pixture_url)
 {
     profile_pixture_url_ = new_profile_pixture_url;
 }
 
-QString User::Signature() const
+QString UIUser::Signature() const
 {
     return signature_;
 }
 
-void User::SetSignature(const QString &new_signature)
+void UIUser::SetSignature(const QString &new_signature)
 {
     signature_ = new_signature;
 }
 
-QString User::Name() const
+QString UIUser::Name() const
 {
     return name_;
 }
 
-void User::SetName(const QString &new_user_name)
+void UIUser::SetName(const QString &new_user_name)
 {
     name_ = new_user_name;
 }
@@ -88,7 +88,7 @@ void ChatHistory::SetFromTo(const QString &from, const QString &to)
     this->from_ = from;
     this->to_ = to;
 
-    if (User::CheckUserUid(to)) {
+    if (UIUser::CheckUserUid(to)) {
         this->SetUid(QString("%1_%2_%3").arg(this->from_).arg(this->to_).arg(this->date_));
     } else {
         this->SetUid(QString("%1_%2_%3").arg(this->to_).arg(this->from_).arg(this->date_));

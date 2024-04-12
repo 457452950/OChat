@@ -6,7 +6,7 @@
 #include <QPushButton>
 
 #include "../windowmanager.h"
-#include "../config/clientsetting.h"
+#include "../common/config/clientsetting.h"
 
 LoginWidget::LoginWidget(QWidget *parent)
     : QWidget(parent)

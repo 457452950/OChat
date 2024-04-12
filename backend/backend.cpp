@@ -21,7 +21,7 @@ void Backend::Destroy() {
 
 Backend::Backend() {}
 
-std::shared_ptr<User> Backend::GetUserFromUid(QString uid) {
+std::shared_ptr<UIUser> Backend::GetUserFromUid(QString uid) {
     auto it = uid_2_users_.find(uid);
     if (it == uid_2_users_.end()) {
         return nullptr;
@@ -39,7 +39,7 @@ std::shared_ptr<ChatGroup> Backend::GetGroupFromUid(QString uid) {
     return it->second;
 }
 
-void Backend::AddUser(std::shared_ptr<User> user)
+void Backend::AddUser(std::shared_ptr<UIUser> user)
 {
     this->uid_2_users_.insert({user->Uid(), user});
 }

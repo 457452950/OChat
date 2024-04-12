@@ -34,7 +34,7 @@ class FriendList : public QWidget {
 public:
     explicit FriendList(QWidget *parent = nullptr);
 
-    void AddUser(QString group,  std::shared_ptr<User> user);
+    void AddUser(QString group,  std::shared_ptr<UIUser> user);
 
 signals:
 
@@ -43,7 +43,7 @@ private:
         bool folded{false};
         QListWidgetItem* header{nullptr};
         struct user_item {
-            std::shared_ptr<User> user;
+            std::shared_ptr<UIUser> user;
             QListWidgetItem* item;
         };
         QVector<user_item> users_items;

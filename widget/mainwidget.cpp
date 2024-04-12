@@ -7,14 +7,14 @@
 #include <QMessageBox>
 
 #include "../windowmanager.h"
-#include "../config/clientsetting.h"
+#include "../common/config/clientsetting.h"
 #include "../cache/datacache.h"
 
 
 /*
  *  主页面
  */
-MainWidget::MainWidget(std::shared_ptr<User> master, QWidget *parent)
+MainWidget::MainWidget(std::shared_ptr<UIUser> master, QWidget *parent)
     : QWidget{parent}, master_user_(master)
 {
     this->resize(SETTING->MainWindowSize);

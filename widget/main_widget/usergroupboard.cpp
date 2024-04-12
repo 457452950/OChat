@@ -59,7 +59,7 @@ UserGroupBoard::UserGroupBoard(QWidget* parent)
     this->setLayout(mainLayout);
 }
 
-void UserGroupBoard::SetUser(std::shared_ptr<User> user)
+void UserGroupBoard::SetUser(std::shared_ptr<UIUser> user)
 {
     this->user_ = user;
     this->group_.reset();

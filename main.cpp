@@ -5,8 +5,8 @@
 #include <asio/version.hpp>
 #include <asio/ssl.hpp>
 
-#include "log/logger.h"
-#include "config/clientsetting.h"
+#include "common/log/logger.h"
+#include "common/config/clientsetting.h"
 #include "cache/datacache.h"
 #include "windowmanager.h"
 

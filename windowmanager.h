@@ -19,7 +19,7 @@ private:
     WindowManager();
 
 public slots:
-    void slot_LoginSuccess(std::shared_ptr<User> master);
+    void slot_LoginSuccess(std::shared_ptr<UIUser> master);
     void slot_CreateChatSession(std::shared_ptr<ChatGroup> group);
     void slot_DestroyChatSession(QString uid);
     void slot_DestroyAllChatSession();
