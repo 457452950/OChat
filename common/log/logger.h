@@ -1,7 +1,7 @@
-#ifndef OCHAT_LOGGER_H
-#define OCHAT_LOGGER_H
+#ifndef OCHAT__COMMON_LOG__LOGGER_H
+#define OCHAT__COMMON_LOG__LOGGER_H
 
 
 void LoggerInit();
 
-#endif // LOGGER_H
+#endif // OCHAT__COMMON_LOG__LOGGER_H

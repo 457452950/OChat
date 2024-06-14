@@ -2,7 +2,7 @@
 
 #include <QtLogging>
 
-#include "../config/clientsetting.h"
+#include "../config/client_setting.h"
 
 void LoggerInit()
 {

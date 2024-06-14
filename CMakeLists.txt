@@ -19,36 +19,38 @@ find_package(OpenSSL REQUIRED)
 
 add_subdirectory("third_party/lazy_box")
 
+
 set(PROJECT_SOURCES
         main.cpp
 
-        common/log/logger.h common/log/logger.cpp
-
-        common/config/clientsetting.h common/config/clientsetting.cpp
+        common/config/client_setting.h common/config/client_setting.cpp
         common/config/config.h common/config/config.cpp
+        common/log/logger.h common/log/logger.cpp
+        common/debug.h
 
-        cache/datacache.h cache/datacache.cpp
+        cache/data_cache.h cache/data_cache.cpp
 
-        widget/loginwidget.h widget/loginwidget.cpp
+        widget/main_widget/shown_board.h widget/main_widget/shown_board.cpp
+        widget/main_widget/session_list.h widget/main_widget/session_list.cpp
+        widget/main_widget/friend_list.h widget/main_widget/friend_list.cpp
+        widget/main_widget/room_list.h widget/main_widget/room_list.cpp
 
-        widget/main_widget/usergroupboard.h widget/main_widget/usergroupboard.cpp
-        widget/main_widget/chatsessionlist.h widget/main_widget/chatsessionlist.cpp
-        widget/main_widget/friendlist.h widget/main_widget/friendlist.cpp
-        widget/main_widget/chatgrouplist.h widget/main_widget/chatgrouplist.cpp
-        widget/mainwidget.h widget/mainwidget.cpp
-        widget/chat_widget/inputwidget.h widget/chat_widget/inputwidget.cpp
-        widget/chat_widget/chathistorywidget.h widget/chat_widget/chathistorywidget.cpp
-        widget/chatwidget.h widget/chatwidget.cpp
+        widget/chat_widget/input_widget.h widget/chat_widget/input_widget.cpp
+        widget/chat_widget/chat_history_widget.h widget/chat_widget/chat_history_widget.cpp
 
-        data_structure/datasructures.h data_structure/datasructures.cpp
+        widget/main_widget.h widget/main_widget.cpp
+        widget/chat_widget.h widget/chat_widget.cpp
+        widget/login_widget.h widget/login_widget.cpp
 
-        backend/Room/Uid.h
+        widget/wrapper.h widget/wrapper.cpp
+
         backend/backend.h backend/backend.cpp
-        backend/Room/clientroom.h backend/Room/clientroom.cpp
+        backend/Room/client_room.h backend/Room/client_room.cpp
         backend/Room/user.h backend/Room/user.cpp
-        backend/Room/chatentry.h backend/Room/chatentry.cpp
+        backend/Room/chat_entry.h backend/Room/chat_entry.cpp
 
-        windowmanager.h windowmanager.cpp
+        window_manager.h window_manager.cpp
+
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -76,7 +78,7 @@ else()
     endif()
 endif()
 
-target_include_directories(OChat PRIVATE "third_party/lazy_box/include")
+target_include_directories(OChat PRIVATE "third_party/lazy_box/include" "./")
 target_link_libraries(OChat PRIVATE Qt${QT_VERSION_MAJOR}::Widgets asio::asio OpenSSL::SSL OpenSSL::Crypto Qt${QT_VERSION_MAJOR}::WebSockets lbox)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

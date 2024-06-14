@@ -1,50 +1,24 @@
 #include "backend.h"
 
-#include <mutex>
-
-Backend* Backend::instance_ = nullptr;
-
-Backend *Backend::GetInstance() {
-    static std::once_flag backend_once_flag;
-
-    std::call_once(backend_once_flag, [&](){
-        instance_ = new Backend();
-    });
-
-    return instance_;
-}
-
-void Backend::Destroy() {
-    delete instance_;
-    instance_ = nullptr;
-}
 
 Backend::Backend() {}
 
-std::shared_ptr<UIUser> Backend::GetUserFromUid(QString uid) {
-    auto it = uid_2_users_.find(uid);
-    if (it == uid_2_users_.end()) {
-        return nullptr;
+void Backend::AddUser(const User &user) { this->uid_2_users_.insert({user.GetUid(), user}); }
+
+void Backend::AddChatRoom(const ChatRoom &room) { this->uid_2_room_[room.GetUid()] = room; }
+
+User *Backend::GetUser(const QString &uid) {
+    auto it = this->uid_2_users_.find(uid);
+    if(it != this->uid_2_users_.end()) {
+        return &it->second;
     }
-
-    return it->second;
+    return nullptr;
 }
 
-std::shared_ptr<ChatGroup> Backend::GetGroupFromUid(QString uid) {
-    auto it = uid_2_group_.find(uid);
-    if (it == uid_2_group_.end()) {
-        return nullptr;
+ChatRoom *Backend::GetRoom(const QString &uid) {
+    auto it = this->uid_2_room_.find(uid);
+    if(it != this->uid_2_room_.end()) {
+        return &it->second;
     }
-
-    return it->second;
-}
-
-void Backend::AddUser(std::shared_ptr<UIUser> user)
-{
-    this->uid_2_users_.insert({user->Uid(), user});
-}
-
-void Backend::AddChatGroup(std::shared_ptr<ChatGroup> group)
-{
-    this->uid_2_group_.insert({group->Uid(), group});
+    return nullptr;
 }

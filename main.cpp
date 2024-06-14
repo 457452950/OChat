@@ -6,33 +6,36 @@
 #include <asio/ssl.hpp>
 
 #include "common/log/logger.h"
-#include "common/config/clientsetting.h"
-#include "cache/datacache.h"
-#include "windowmanager.h"
-
-int main(int argc, char *argv[])
-{
-    ClientSetting::GetInstance();
-    LoggerInit();
-    DataCache::Init();
-
-    QApplication a(argc, argv);
-    WindowManager::Init();
+#include "common/config/client_setting.h"
+#include "cache/data_cache.h"
+#include "window_manager.h"
 
 #ifdef QT_DEBUG
+#include "common/debug.h"
+#endif
+
+int main(int argc, char *argv[]) {
+    ClientSetting::GetInstance();
+    LoggerInit();
+    DataCache::GetInstance();
+
+    QApplication a(argc, argv);
+    WindowManager::GetInstance();
+
+#ifdef QT_DEBUG
+    debug::Init();
     qDebug() << "\n-------------------------------------\n"
              << "   DEBUG MODEL\n"
-             << " test user name :" << ClientSetting::DEBUG_GetDebugUser()->Name() << "\n"
-             << " test password :" << ClientSetting::DEBUG_login_password() << "\n"
-             << "-------------------------------------"
-        ;
+             << " test user name :" << debug::MasterUser().GetName() << "\n"
+             << " test password :" << debug::MasterUserPasswd() << "\n"
+             << "-------------------------------------";
 #endif
 
     auto res = a.exec();
 
-    WindowManager::Close();
+    WindowManager::Destroy();
     ClientSetting::Destroy();
-    DataCache::Clear();
+    DataCache::Destroy();
 
     return res;
 }

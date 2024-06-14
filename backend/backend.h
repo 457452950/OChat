@@ -1,37 +1,38 @@
-#ifndef BACKEND_H
-#define BACKEND_H
+#ifndef OCHAT__NACKEND_ROOM__BACKEND_H
+#define OCHAT__NACKEND_ROOM__BACKEND_H
 
-#include "../data_structure/datasructures.h"
+#include <lazybox/toy/Instance.hpp>
+#include <lazybox/Toy/NonCopyAble.hpp>
 
-class Backend
-{
+#include "Room/client_room.h"
+#include "Room/chat_entry.h"
+#include "Room/user.h"
+
+class Backend : public lbox::Instance<Backend> {
+    friend lbox::Instance<Backend>;
+
+    Backend();
+
 public:
-    static Backend* GetInstance();
-    static void Destroy();
-
     ~Backend() = default;
 
-private:
-    Backend();
-    static Backend* instance_;
+
+    void AddUser(const User &user);
+    void AddChatRoom(const ChatRoom &room);
+
+    User     *GetUser(const QString &uid);
+    ChatRoom *GetRoom(const QString &uid);
 
 public:
 #ifdef QT_DEBUG
-    void SetSelf(std::shared_ptr<UIUser> self) { self_ = self; }
+    void SetSelf(const User &self) { self_ = self; }
+    User self_;
 #endif
-    std::shared_ptr<UIUser> SelfUser() { return self_; }
 
-    std::shared_ptr<UIUser> GetUserFromUid(QString uid);
-    std::shared_ptr<ChatGroup> GetGroupFromUid(QString uid);
-
-    void AddUser(std::shared_ptr<UIUser> user);
-    void AddChatGroup(std::shared_ptr<ChatGroup> group);
 
 private:
-    std::shared_ptr<UIUser> self_;
-
-    std::unordered_map<QString, std::shared_ptr<UIUser>> uid_2_users_;
-    std::unordered_map<QString, std::shared_ptr<ChatGroup>> uid_2_group_;
+    std::unordered_map<QString, User>     uid_2_users_;
+    std::unordered_map<QString, ChatRoom> uid_2_room_;
 };
 
-#endif // BACKEND_H
+#endif // OCHAT__NACKEND_ROOM__BACKEND_H

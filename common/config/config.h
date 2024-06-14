@@ -1,10 +1,9 @@
-#ifndef CONFIG_H
-#define CONFIG_H
+#ifndef OCHAT__COMMON_CONFIG__CONFIG_H
+#define OCHAT__COMMON_CONFIG__CONFIG_H
 
 #include <QString>
 
-class Config
-{
+class Config {
 public:
     Config();
     ~Config() = default;
@@ -15,4 +14,4 @@ private:
     QString log_formater_{"[%{time yyyyMMdd h:mm:ss.zzz}][%{type}][%{pid}-%{threadid}][%{file}:%{line}]:%{message}"};
 };
 
-#endif // CONFIG_H
+#endif // OCHAT__COMMON_CONFIG__CONFIG_H
