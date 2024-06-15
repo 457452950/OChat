@@ -4,26 +4,48 @@
 #include <QtLogging>
 #include <QMutexLocker>
 
+#include <lazybox/Assert.hpp>
 
-DataCache::DataCache(QObject *parent) : QObject{parent} {}
+#include "common/config/client_setting.h"
 
-const QImage *DataCache::GetImage(QString url) {
+
+DataCache::DataCache(QObject *parent) : QObject{parent} { Assert(this->store(SETTING->UserNoneImage)); }
+
+QImage *DataCache::store(const QString &url) {
     QMutexLocker unique_lock(&this->image_mutex_);
+    QImage       img;
+    bool         ok = img.load(url);
+    if(ok) {
+        qDebug() << url << "read ok";
+        auto it = this->image_cache_.insert(url, std::move(img));
+        return &it.value();
+    }
+    qWarning() << "load " << url << " image err";
+    return nullptr;
+}
 
-    auto iter = this->image_cache_.find(url);
+QImage *DataCache::get(const QString &url) {
+    QMutexLocker unique_lock(&this->image_mutex_);
+    auto         iter = this->image_cache_.find(url);
     if(iter != this->image_cache_.end()) {
         return &iter.value();
     }
+    return nullptr;
+}
 
-    QImage img;
-    auto   ok = img.load(url);
-    if(!ok) {
-        qFatal() << "load " << url << " image err";
-        return nullptr;
-    } else {
-        qDebug() << url << "read ok";
+
+const QImage *DataCache::GetImage(QString url) {
+    QImage *img = this->get(url);
+
+    if(img) {
+        return img;
     }
 
-    iter = this->image_cache_.insert(url, std::move(img));
-    return &iter.value();
+    img = this->store(url);
+
+    if(img) {
+        return img;
+    }
+
+    return nullptr;
 }

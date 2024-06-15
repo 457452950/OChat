@@ -13,6 +13,8 @@ namespace debug {
 
 inline User MasterUser() {
     static auto user = User("10000", "asd");
+    user.SetSignature("sigsig_signature1");
+    user.SetProfilePixtureUrl("H:/Resources/image/paimeng.png");
     return user;
 }
 inline QString MasterUserPasswd() { return "asd"; }
@@ -28,7 +30,7 @@ inline void Init() {
         user2.SetUid("10001");
         user2.SetName("asd2");
         user2.SetSignature("sigsig_signature2");
-        user2.SetProfilePixtureUrl("H:/Resources/paimeng.jpg");
+        user2.SetProfilePixtureUrl("H:/Resources/image/snake.jpg");
 
         Backend::GetInstance()->AddUser(user2);
 

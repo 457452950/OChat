@@ -12,13 +12,17 @@ class DataCache : public QObject, public lbox::Instance<DataCache> {
     friend class lbox::Instance<DataCache>;
     Q_OBJECT
 
+private:
+    explicit DataCache(QObject *parent = nullptr);
+
 public:
     const QImage *GetImage(QString url);
 
 signals:
 
 private:
-    explicit DataCache(QObject *parent = nullptr);
+    QImage *store(const QString &url);
+    QImage *get(const QString &url);
 
     QMap<QString, QImage> image_cache_;
     QMutex                image_mutex_;

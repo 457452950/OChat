@@ -6,6 +6,7 @@
 
 #include "window_manager.h"
 #include "cache/data_cache.h"
+#include "common/config/client_setting.h"
 
 
 /*
@@ -83,7 +84,7 @@ void ShownBoard::Refresh(const User &user) {
 
     auto img = DataCache::GetInstance()->GetImage(user.GetProfilePixtureUrl());
     if(img == nullptr) {
-        return;
+        img = DataCache::GetInstance()->GetImage(SETTING->UserNoneImage);
     }
 
     auto   s    = std::min<int>(img->width(), img->height());

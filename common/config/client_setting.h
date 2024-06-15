@@ -26,6 +26,9 @@ public:
     const QSize ChatWindowSize        = {800, 600};
     const QSize ChatWindowMinimumSize = {600, 450};
 
+    // ui default img
+    const QString UserNoneImage{":/image/resource/image/awesomeface.png"};
+
     // room regix string
     const QRegularExpression UserUidRegStr{"^\\d{5}$"};
     // uid_uid

@@ -2,5 +2,6 @@
     <qresource prefix="/image">
         <file>resource/image/arrow_down.png</file>
         <file>resource/image/arrow_right.png</file>
+        <file>resource/image/awesomeface.png</file>
     </qresource>
 </RCC>
