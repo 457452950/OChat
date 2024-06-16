@@ -8,6 +8,7 @@
 
 #include <lazybox/toy/Instance.hpp>
 
+#include "backend/backend.h"
 #include "widget/wrapper.h"
 
 class WindowManager : public QObject, public lbox::Instance<WindowManager> {
@@ -22,12 +23,12 @@ public:
     void CreateChatSession(const QString &uid);
 
 public slots:
-    void slot_LoginSuccess(const User &master);
+    void slot_LoginSuccess(const MasterUser &master);
     void slot_DestroyChatSession(const QString &uid);
     void slot_DestroyAllChatSession();
 
 public:
-    ObjectChangeList ChangeList;
+    EventWrapperManager ChangeList;
 
 private:
     std::unique_ptr<QWidget> login_wid_{nullptr};

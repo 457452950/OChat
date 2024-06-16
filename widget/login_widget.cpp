@@ -58,9 +58,9 @@ void LoginWidget::slot_LoginBtnClicked() {
     qDebug("user:{%s},psd:{%s}", qUtf8Printable(this->user_name_->text()), qUtf8Printable(this->password_->text()));
 
 #ifdef QT_DEBUG
-    if(this->user_name_->text() == debug::MasterUser().GetName() &&
+    if(this->user_name_->text() == debug::LocalMasterUser().name &&
        this->password_->text() == debug::MasterUserPasswd()) {
-        WindowManager::GetInstance()->slot_LoginSuccess(debug::MasterUser());
+        WindowManager::GetInstance()->slot_LoginSuccess(debug::LocalMasterUser());
         return;
     }
 #endif

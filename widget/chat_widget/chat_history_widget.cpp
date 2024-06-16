@@ -22,9 +22,9 @@ ChatEntryWidget::ChatEntryWidget(QListWidgetItem *item, QWidget *parent) : QWidg
 }
 
 void ChatEntryWidget::SetSender(const User &user) {
-    bool is_self = Backend::GetInstance()->self_.GetUid() == user.GetUid();
+    bool is_self = Backend::GetInstance()->self_.uid == user.uid;
 
-    auto img   = DataCache::GetInstance()->GetImage(user.GetProfilePixtureUrl());
+    auto img   = DataCache::GetInstance()->GetImage(user.profile_pixture_url);
     auto s     = std::min<int>(img->width(), img->height());
     auto image = img->scaled({s, s}, Qt::KeepAspectRatioByExpanding);
     this->pic_->setPixmap(QPixmap::fromImage(image));
@@ -182,7 +182,7 @@ void ChatHistoryWidget::AddHistory(std::shared_ptr<ChatEntry> history) {
         if(entrys_[i].history == history) {
             return;
         }
-        if(entrys_[i].history->Date() > history->Date()) {
+        if(entrys_[i].history->date > history->date) {
             break;
         }
         index = i;
@@ -194,8 +194,8 @@ void ChatHistoryWidget::AddHistory(std::shared_ptr<ChatEntry> history) {
     this->chat_entrys_widget_->insertItem(index, item);
     this->chat_entrys_widget_->setItemWidget(item, wid);
 
-    auto uid = history->From();
+    auto uid = history->from;
     wid->SetSender(uid);
-    wid->SetText(history->Context().text, QDateTime::fromMSecsSinceEpoch((history->Date())));
-    qDebug() << QDateTime::fromMSecsSinceEpoch((history->Date()));
+    wid->SetText(history->context.text, QDateTime::fromMSecsSinceEpoch((history->date)));
+    qDebug() << QDateTime::fromMSecsSinceEpoch((history->date));
 }

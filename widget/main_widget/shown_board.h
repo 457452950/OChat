@@ -4,13 +4,15 @@
 #include <QLabel>
 #include <QWidget>
 
-#include "widget/wrapper.h"
+#include <lazybox/Assert.hpp>
 
+#include "widget/wrapper.h"
+#include "backend/backend.h"
 
 /*
  *  用户展示面板
  */
-class ShownBoard : public QWidget, public ObjectChangeList::Listener {
+class ShownBoard : public QWidget, public EventWrapperManager::Listener {
     Q_OBJECT
 public:
     explicit ShownBoard(QWidget *parent = nullptr);
@@ -27,8 +29,19 @@ public:
 private:
     void resizeEvent(QResizeEvent *event) override;
 
-    void OnUserUpdate(const User &user) override { this->Refresh(user); }
-    void OnChatRoomUpdate(const ChatRoom &room) override { this->Refresh(room); }
+    void OnObjectUpdate(const ChangeEvent &event) override {
+        if(event.type == Mod) {
+            if(shown_user_) {
+                auto user = Backend::GetInstance()->GetUser(event.uid);
+                Assert(user, "user not found");
+                this->Refresh(*user);
+            } else {
+                auto room = Backend::GetInstance()->GetRoom(event.uid);
+                Assert(room, "user not found");
+                this->Refresh(*room);
+            }
+        }
+    }
 
 private:
     /* layout */
@@ -39,6 +52,7 @@ private:
     // 展示信息
     QLabel *show_label_;
 
+    bool    shown_user_{true};
     QString shown_uid_;
 };
 

@@ -21,7 +21,7 @@ ChatWidget::ChatWidget(QString group_uid, QWidget *parent) : QWidget{parent} {
     if(room == nullptr) {
         this->Refresh("待刷新");
     } else {
-        this->Refresh(room->GetName());
+        this->Refresh(room->name);
     }
 }
 

@@ -9,12 +9,13 @@
 
 #include <lazybox/Assert.hpp>
 
+#include "backend/backend.h"
 #include "widget/wrapper.h"
 
 /*
  *  对话记录
  */
-class ChatEntryWidget : public QWidget, public ObjectChangeList::Listener {
+class ChatEntryWidget : public QWidget, public EventWrapperManager::Listener {
     Q_OBJECT
 public:
     explicit ChatEntryWidget(QListWidgetItem *item, QWidget *parent);
@@ -34,7 +35,11 @@ public:
     void resizeEvent(QResizeEvent *event) override;
 
 private:
-    void OnUserUpdate(const User &user) override { this->SetSender(user); }
+    void OnObjectUpdate(const ChangeEvent &event) override {
+        if(event.type == Mod) {
+            this->SetSender(event.uid);
+        }
+    }
 
 
 private:

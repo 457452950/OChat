@@ -65,6 +65,7 @@ ShownBoard::ShownBoard(QWidget *parent) : QWidget(parent) {
 ShownBoard::~ShownBoard() { ChangeManager.UnRegister(this); }
 
 void ShownBoard::SetUser(const QString &uid) {
+    this->shown_user_ = true;
     ChangeManager.Register(this, {uid});
     auto user = Backend::GetInstance()->GetUser(uid);
     Assert(user, "user not found {}", uid.toStdString());
@@ -72,6 +73,7 @@ void ShownBoard::SetUser(const QString &uid) {
 }
 
 void ShownBoard::SetRoom(const QString &uid) {
+    this->shown_user_ = false;
     ChangeManager.Register(this, {uid});
     auto room = Backend::GetInstance()->GetRoom(uid);
     Assert(room, "user not found {}", uid.toStdString());
@@ -79,10 +81,10 @@ void ShownBoard::SetRoom(const QString &uid) {
 }
 
 void ShownBoard::Refresh(const User &user) {
-    this->name_->setText(user.GetName());
-    this->show_label_->setText(user.GetSignature());
+    this->name_->setText(user.name);
+    this->show_label_->setText(user.signature);
 
-    auto img = DataCache::GetInstance()->GetImage(user.GetProfilePixtureUrl());
+    auto img = DataCache::GetInstance()->GetImage(user.profile_pixture_url);
     if(img == nullptr) {
         img = DataCache::GetInstance()->GetImage(SETTING->UserNoneImage);
     }
@@ -93,10 +95,10 @@ void ShownBoard::Refresh(const User &user) {
 }
 
 void ShownBoard::Refresh(const ChatRoom &room) {
-    this->name_->setText(room.GetName());
-    this->show_label_->setText(room.GetSignature());
+    this->name_->setText(room.name);
+    this->show_label_->setText(room.signature);
 
-    auto   img  = DataCache::GetInstance()->GetImage(room.GetProfilePixtureUrl());
+    auto   img  = DataCache::GetInstance()->GetImage(room.profile_pixture_url);
     auto   s    = std::min<int>(img->width(), img->height());
     auto &&img2 = img->scaled({s, s}, Qt::KeepAspectRatioByExpanding);
     this->pix_->setPixmap(QPixmap::fromImage(img2));

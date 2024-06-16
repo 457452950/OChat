@@ -1,36 +1,29 @@
 #ifndef OCHAT__NACKEND_ROOM__USER_H
 #define OCHAT__NACKEND_ROOM__USER_H
 
-#include <unordered_set>
 
-#include <QString>
-#include <QHash>
+#include "basic.h"
 
-class User {
+struct User {
 public:
     User() = default;
-    User(QString id, QString user_name, const std::unordered_set<QString> &groups = {});
+    User(QString id, QString user_name);
     ~User() = default;
 
-    void    SetUid(const QString &uid) { uid_ = uid; }
-    QString GetUid() const { return uid_; }
+    QString uid;
+    QString name;
+    QString signature;
+    QString profile_pixture_url;
+};
 
-    void    SetName(const QString &name) { name_ = name; }
-    QString GetName() const { return name_; }
+struct MasterUser : public User {
+public:
+    MasterUser() = default;
+    MasterUser(QString id, QString user_name);
+    ~MasterUser() = default;
 
-    QString GetSignature() const;
-    void    SetSignature(const QString &newSignature);
-
-    QString GetProfilePixtureUrl() const;
-    void    SetProfilePixtureUrl(const QString &newProfile_pixture_url);
-
-private:
-    QString uid_;
-    QString name_;
-    QString signature_;
-    QString profile_pixture_url_;
-
-    std::unordered_set<QString> groups_;
+    UidSet groups;
+    UidSet friends;
 };
 
 #endif // OCHAT__NACKEND_ROOM__USER_H

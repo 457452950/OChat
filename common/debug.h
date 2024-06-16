@@ -11,10 +11,10 @@
 
 namespace debug {
 
-inline User MasterUser() {
-    static auto user = User("10000", "asd");
-    user.SetSignature("sigsig_signature1");
-    user.SetProfilePixtureUrl("H:/Resources/image/paimeng.png");
+inline MasterUser LocalMasterUser() {
+    static MasterUser user{"10000", "asd"};
+    user.signature           = "sigsig_signature1";
+    user.profile_pixture_url = "H:/Resources/image/paimeng.png";
     return user;
 }
 inline QString MasterUserPasswd() { return "asd"; }
@@ -27,41 +27,41 @@ inline void Init() {
         Backend::GetInstance()->SetSelf(MasterUser());
 
         User user2;
-        user2.SetUid("10001");
-        user2.SetName("asd2");
-        user2.SetSignature("sigsig_signature2");
-        user2.SetProfilePixtureUrl("H:/Resources/image/snake.jpg");
+        user2.uid                 = "10001";
+        user2.name                = "asd2";
+        user2.signature           = "sigsig_signature2";
+        user2.profile_pixture_url = "H:/Resources/image/snake.jpg";
 
         Backend::GetInstance()->AddUser(user2);
 
         int num = 1000'0000;
 
         ChatRoom group1;
-        group1.SetUid(QString::number(num++));
-        group1.SetName("1");
-        group1.SetSignature("aaaa");
-        group1.SetProfilePixtureUrl("H:/Resources/a.png");
+        group1.uid                 = QString::number(num++);
+        group1.name                = "1";
+        group1.signature           = "aaaa";
+        group1.profile_pixture_url = "H:/Resources/a.png";
         Backend::GetInstance()->AddChatRoom(group1);
 
         ChatRoom group2;
-        group2.SetUid(QString::number(num++));
-        group2.SetName("2");
-        group2.SetSignature("bbb");
-        group2.SetProfilePixtureUrl("H:/Resources/m2.png");
+        group2.uid                 = QString::number(num++);
+        group2.name                = "2";
+        group2.signature           = "bbb";
+        group2.profile_pixture_url = "H:/Resources/m2.png";
         Backend::GetInstance()->AddChatRoom(group2);
 
         ChatRoom group3;
-        group3.SetUid(QString::number(num++));
-        group3.SetName("3");
-        group3.SetSignature("cc");
-        group3.SetProfilePixtureUrl("H:/Resources/stand.png");
+        group3.uid                 = QString::number(num++);
+        group3.name                = "3";
+        group3.signature           = "cc";
+        group3.profile_pixture_url = "H:/Resources/stand.png";
         Backend::GetInstance()->AddChatRoom(group3);
 
         ChatRoom group4;
-        group4.SetUid(QString::number(num++));
-        group4.SetName("4");
-        group4.SetSignature("d");
-        group4.SetProfilePixtureUrl("H:/Resources/stuff.jpg");
+        group4.uid                 = QString::number(num++);
+        group4.name                = "4";
+        group4.signature           = "d";
+        group4.profile_pixture_url = "H:/Resources/stuff.jpg";
         Backend::GetInstance()->AddChatRoom(group4);
     });
 }

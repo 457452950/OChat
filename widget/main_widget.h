@@ -21,7 +21,7 @@
 /*
  *  主页面
  */
-class MainWidget : public QWidget, public ObjectChangeList::Listener {
+class MainWidget : public QWidget, public EventWrapperManager::Listener {
     Q_OBJECT
 public:
     explicit MainWidget(const User &master, QWidget *parent = nullptr);
@@ -32,7 +32,7 @@ signals:
 private:
     void closeEvent(QCloseEvent *event) override;
 
-    void OnUserUpdate(const User &user) override;
+    void OnObjectUpdate(const ChangeEvent &event) override;
 
 private:
     // layout

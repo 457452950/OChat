@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
     debug::Init();
     qDebug() << "\n-------------------------------------\n"
              << "   DEBUG MODEL\n"
-             << " test user name :" << debug::MasterUser().GetName() << "\n"
+             << " test user name :" << debug::LocalMasterUser().name << "\n"
              << " test password :" << debug::MasterUserPasswd() << "\n"
              << "-------------------------------------";
 #endif

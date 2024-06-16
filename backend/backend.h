@@ -2,7 +2,6 @@
 #define OCHAT__NACKEND_ROOM__BACKEND_H
 
 #include <lazybox/toy/Instance.hpp>
-#include <lazybox/Toy/NonCopyAble.hpp>
 
 #include "Room/client_room.h"
 #include "Room/chat_entry.h"
@@ -25,8 +24,8 @@ public:
 
 public:
 #ifdef QT_DEBUG
-    void SetSelf(const User &self) { self_ = self; }
-    User self_;
+    void       SetSelf(const MasterUser &self) { self_ = self; }
+    MasterUser self_;
 #endif
 
 

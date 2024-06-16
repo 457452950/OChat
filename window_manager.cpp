@@ -18,7 +18,7 @@ void WindowManager::CreateChatSession(const QString &uid) {
     this->chat_wids_.insert(uid, std::make_shared<ChatWidget>(uid));
 }
 
-void WindowManager::slot_LoginSuccess(const User &master) {
+void WindowManager::slot_LoginSuccess(const MasterUser &master) {
     this->main_wid_ = std::make_unique<MainWidget>(master);
     this->main_wid_->show();
 

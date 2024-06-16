@@ -44,6 +44,7 @@ set(PROJECT_SOURCES
 
         widget/wrapper.h widget/wrapper.cpp
 
+        backend/Room/basic.h
         backend/backend.h backend/backend.cpp
         backend/Room/client_room.h backend/Room/client_room.cpp
         backend/Room/user.h backend/Room/user.cpp

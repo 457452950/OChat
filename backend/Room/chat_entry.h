@@ -4,8 +4,7 @@
 #include <QString>
 #include <QDateTime>
 
-class ChatMessage {
-public:
+struct ChatMessage {
     enum Type {
         Text,
     };
@@ -13,29 +12,18 @@ public:
     QString text;
 };
 
-class ChatEntry {
+struct ChatEntry {
 public:
     ChatEntry();
 
-    QString GetUid() const { return uid_; }
+    QString uid;
 
-    QString From() const { return from_; }
+    QString from;
+    QString to;
 
-    QString To() const { return to_; }
+    int64_t date{QDateTime::currentMSecsSinceEpoch()};
 
-    int64_t Date() const { return date_; }
-
-    ChatMessage Context() const { return context_; }
-
-private:
-    QString uid_;
-
-    QString from_;
-    QString to_;
-
-    int64_t date_{QDateTime::currentMSecsSinceEpoch()};
-
-    ChatMessage context_;
+    ChatMessage context;
 };
 
 #endif // OCHAT__BACKEND_ROOM__CHAT_ENTRY_H

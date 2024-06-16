@@ -15,7 +15,7 @@
 
 
 /* 聊天对话窗 */
-class ChatWidget : public QWidget, public InputWidget::Listeaner, public ObjectChangeList::Listener {
+class ChatWidget : public QWidget, public InputWidget::Listeaner, public EventWrapperManager::Listener {
     Q_OBJECT
 public:
     explicit ChatWidget(QString group_uid, QWidget *parent = nullptr);
@@ -30,6 +30,11 @@ private:
     void slot_BtnShowHistoryReleased();
 
     void UserInput(const QString &text) override;
+
+    // from
+    void OnObjectUpdate(const ChangeEvent &event) {
+        // todo:
+    }
 
 private:
     /* layout */

@@ -55,9 +55,9 @@ MainWidget::MainWidget(const User &master, QWidget *parent) : QWidget{parent}, m
 
     this->setLayout(mainLayout);
 
-    this->master_board_->SetUser(master_user_.GetUid());
+    this->master_board_->SetUser(master_user_.uid);
 
-    ChangeManager.Register(this, {master_user_.GetUid()});
+    ChangeManager.Register(this, {master_user_.uid});
 }
 
 MainWidget::~MainWidget() { ChangeManager.UnRegister(this); }
@@ -82,7 +82,7 @@ void MainWidget::closeEvent(QCloseEvent *event) {
     // }
 }
 
-void MainWidget::OnUserUpdate(const User &user) {
-    Assert(user.GetUid() == this->master_user_.GetUid());
-    this->master_user_ = user;
+void MainWidget::OnObjectUpdate(const ChangeEvent &event) {
+    Assert(event.type == Mod);
+    Assert(event.uid == this->master_user_.uid);
 }
